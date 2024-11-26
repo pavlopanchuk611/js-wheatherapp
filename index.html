@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Прогноз погоди</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Прогноз погоди</h1>
+            <input type="text" id="cityInput" placeholder="Baku, Azerbaijan" />
+        </header>
+        
+        <nav>
+            <button class="tab active">Today</button>
+            <button class="tab">5-day forecast</button>
+        </nav>
+        
+        <section class="current-weather">
+            <div class="weather-header">
+                <h2>Current Weather</h2>
+                <span class="date">30.06.2018</span>
+            </div>
+            <div class="weather-info">
+                <div class="weather-icon">☀️</div>
+                <div class="weather-details">
+                    <p class="temperature">29°C</p>
+                    <p class="description">Sunny</p><!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Прогноз погоди</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Прогноз погоди</h1>
+            <input type="text" id="cityInput" placeholder="Baku, Azerbaijan" />
+        </header>
+        
+        <nav>
+            <button class="tab active">Today</button>
+            <button class="tab">5-day forecast</button>
+        </nav>
+        
+        <section class="current-weather">
+            <div class="weather-header">
+                <h2>Current Weather</h2>
+                <span class="date" id="current-date"></span>
+            </div>
+            <div class="weather-info">
+                <div class="weather-icon" id="weather-icon"></div>
+                <div class="weather-details">
+                    <p class="temperature" id="temperature"></p>
+                    <p class="description" id="description"></p>
+                    <p class="realfeel" id="realfeel"></p>
+                    <p class="sun-times" id="sun-times"></p>
+                </div>
+            </div>
+        </section>
+
+        <section class="hourly-forecast">
+            <h2>Hourly</h2>
+            <div class="hourly-grid" id="hourly-grid"></div>
+        </section>
+
+        <section class="nearby-places">
+            <h2>Nearby Places</h2>
+            <div class="places-grid" id="places-grid"></div>
+        </section>
+    </div>
+
+    <script>
+        // Get current date
+        const currentDate = document.getElementById('current-date');
+        const date = new Date();
+        currentDate.textContent = date.toLocaleDateString('uk-UA', { day: 'numeric', month: 'numeric', year: 'numeric' });
+
+        // Get weather data from API
+        const api = 'https://api.openweathermap.org/data/2.5/weather?q=Baku&appid=YOUR_API_KEY&units=metric&lang=uk';
+        fetch(api)
+            .then(response => response.json())
+            .then(data => {
+                const weatherIcon = document.getElementById('weather-icon');
+                const temperature = document.getElementById('temperature');
+                const description = document.getElementById('description');
+                const realfeel = document.getElementById('realfeel');
+                const sunTimes = document.getElementById('sun-times');
+
+                weatherIcon.textContent = data.weather[0].icon;
+                temperature.textContent = `${data.main.temp}°C`;
+                description.textContent = data.weather[0].description;
+                realfeel.textContent = `Real Feel: ${data.main.feels_like}°C`;
+                sunTimes.textContent = `Sunrise: ${new Date(data.sys.sunrise * 1000).toLocaleTimeString('uk-UA')} | Sunset: ${new Date(data.sys.sunset * 1000).toLocaleTimeString('uk-UA')}`;
+
+                // Get hourly forecast
+                const hourlyGrid = document.getElementById('hourly-grid');
+                const hourlyForecast = data.hourly;
+                hourlyForecast.forEach(hour => {
+                    const hourlyItem = document.createElement('div');
+                    hourlyItem.classList.add('hourly-item');
+                    hourlyItem.innerHTML = `
+                        <p>${new Date(hour.dt * 1000).toLocaleTimeString('uk-UA')}</p>
+                        <p>${hour.weather[0].icon}</p>
+                        <p>${hour.temp}°C</p>
+                    `;
+                    hourlyGrid.appendChild(hourlyItem);
+                });
+
+                // Get nearby places
+                const placesGrid = document.getElementById('places-grid');
+                const nearbyPlaces = [
+                    { name: 'Baladzhary', temperature: 36 },
+                    { name: 'Badamdar', temperature: 36 },
+                    { name: 'Bailov', temperature: 29 },
+                    { name: 'Cherni Gorod', temperature: 29 },
+                ];
+                nearbyPlaces.forEach(place => {
+                    const placeItem = document.createElement('div');
+                    placeItem.classList.add('place-item');
+                    placeItem.textContent = `${place.name}: ${place.temperature}°C`;
+                    placesGrid.appendChild(placeItem);
+                });
+            })
+            .catch(error => console.error(error));
+    </script>
+</body>
+</html
+                    <p class="realfeel">Real Feel: 30°C</p>
+                    <p class="sun-times">
+                        Sunrise: 7:04 AM | Sunset: 5:11 PM<br>
+                        Duration: 10:07 hr
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="hourly-forecast">
+            <h2>Hourly</h2>
+            <div class="hourly-grid">
+                <div class="hourly-item">
+                    <p>7 PM</p>
+                    <p>☀️</p>
+                    <p>29°C</p>
+                </div>
+                <div class="hourly-item">
+                    <p>8 PM</p>
+                    <p>☀️</p>
+                    <p>28°C</p>
+                </div>
+                <div class="hourly-item">
+                    <p>9 PM</p>
+                    <p>🌙</p>
+                    <p>28°C</p>
+                </div>
+                <!-- Add more hourly items as needed -->
+            </div>
+        </section>
+
+        <section class="nearby-places">
+            <h2>Nearby Places</h2>
+            <div class="places-grid">
+                <div class="place-item">Baladzhary: 36°C</div>
+                <div class="place-item">Badamdar: 36°C</div>
+                <div class="place-item">Bailov: 29°C</div>
+                <div class="place-item">Cherni Gorod: 29°C</div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>
